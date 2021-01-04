@@ -22,16 +22,16 @@ function ToDoListPage() {
     }
 
     const todoListView = todolistData.map(item => 
-        <ListItem dense button key={item.id}>
+        <ListItem dense button key={item.id} onClick={() => itemClicked(item.id)}>
             <ListItemIcon>
-                <Checkbox onClick={() => itemClicked(item.id)}
+                <Checkbox
                 edge="start"
                 checked={item.completed}
                 tabIndex={-1}
                 disableRipple
                 />
             </ListItemIcon>
-            <ListItemText primary={item.txt} key={item.id} />
+            <ListItemText className={ item.completed ? "checked-txt" : ""} primary={item.txt} key={item.id} />
         </ListItem>
     );
 

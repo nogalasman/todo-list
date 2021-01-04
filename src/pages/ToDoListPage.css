@@ -3,3 +3,7 @@
     max-width: 360px;
     background-color: #F5F5F5;
 }
+
+.p-todolist .checked-txt {
+    text-decoration: line-through;
+}
