@@ -35,6 +35,8 @@ function ToDoListPage() {
         </ListItem>
     );
 
+    const getOpenTasksNum = todolistData.map(element => !element.completed).reduce((a, b) => a + b, 0);
+
     return (
         <div className="p-todolist">
             <h1>ToDos</h1>
@@ -44,6 +46,7 @@ function ToDoListPage() {
             <List component="nav" aria-label="todolist items">
                 { todoListView }
             </List>
+            <h4 className="items-left-txt">{ getOpenTasksNum } items left</h4>
         </div>
     )
 }

@@ -7,3 +7,8 @@
 .p-todolist .checked-txt {
     text-decoration: line-through;
 }
+
+.p-todolist .items-left-txt {
+    text-align: left;
+    padding-left: 15px;
+}
