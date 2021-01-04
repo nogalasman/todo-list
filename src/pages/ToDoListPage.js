@@ -1,4 +1,5 @@
-import { List, ListItem, ListItemText, TextField } from '@material-ui/core';
+import { Checkbox, List, ListItem, ListItemIcon, ListItemText, TextField } from '@material-ui/core';
+import { useState } from 'react';
 import './ToDoListPage.css';
 
 function ToDoListPage() {
@@ -9,10 +10,30 @@ function ToDoListPage() {
         {id: 2, txt: 'Email Shay', completed: false},
     ];
 
-    const todoListView = todos.map(item => 
-        <ListItem button>
+    const [todolistData, setTodolistData] = useState(todos);
+
+    function itemClicked(id) {
+        const newList = [...todolistData];
+        const item = newList.find(item => item.id === id);
+        if (item) {
+            item.completed = !item.completed;
+        }
+        setTodolistData(newList);
+    }
+
+    const todoListView = todolistData.map(item => 
+        <ListItem dense button key={item.id}>
+            <ListItemIcon>
+                <Checkbox onClick={() => itemClicked(item.id)}
+                edge="start"
+                checked={item.completed}
+                tabIndex={-1}
+                disableRipple
+                />
+            </ListItemIcon>
             <ListItemText primary={item.txt} key={item.id} />
-        </ListItem>);
+        </ListItem>
+    );
 
     return (
         <div className="p-todolist">
