@@ -12,3 +12,8 @@
     text-align: left;
     padding-left: 15px;
 }
+
+.p-todolist .filter-btns-container {
+    display: flex;
+    justify-content: space-between;
+}
