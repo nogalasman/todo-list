@@ -17,3 +17,11 @@
     display: flex;
     justify-content: space-between;
 }
+
+.p-todolist .tditem button {
+    display: none;
+}
+
+.p-todolist .tditem:hover>button {
+    display: block;
+}

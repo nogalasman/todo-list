@@ -61,7 +61,7 @@ function ToDoListPage() {
         } 
 
         return list.map(item => 
-            <ListItem dense button key={item.id}>
+            <ListItem dense button key={item.id} className="tditem">
                 <ListItemIcon onClick={() => itemClicked(item.id)}>
                     <Checkbox
                     edge="start"
