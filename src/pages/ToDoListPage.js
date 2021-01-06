@@ -1,8 +1,10 @@
 import { AppBar, Button, Checkbox, IconButton, List, ListItem, ListItemIcon, ListItemText, TextField, Toolbar } from '@material-ui/core';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import ToDoItem from '../model/ToDoItem';
 import './ToDoListPage.css';
 import DeleteIcon from '@material-ui/icons/Delete';
+import Alert from '@material-ui/lab/Alert';
+import React from 'react';
 
 function ToDoListPage() {
 
@@ -14,6 +16,7 @@ function ToDoListPage() {
 
     const [todolistData, setTodolistData] = useState([]);
     const [filter, setFilter] = useState("all");
+    const [showError, setshowError] = useState(false);
 
     function itemClicked(id) {
         const newList = [...todolistData];
@@ -21,6 +24,7 @@ function ToDoListPage() {
         if (item) {
             item.completed = !item.completed;
         }
+        setshowError(false);
         setTodolistData(newList);
     }
 
@@ -31,12 +35,13 @@ function ToDoListPage() {
             list.splice(idx, 1);
             setTodolistData(list);
         } else {
-            alert('cannot delete an active task!');
+            setshowError(true);
         }
         
     }
 
     function addItem(event) {
+
         if ((event.keyCode === 13) && (event.target.value !== "")){
            
             let maxId = 0;
@@ -48,6 +53,7 @@ function ToDoListPage() {
             const newList = [...todolistData];
             newList.push(newItem);
             event.target.value = "";
+            setshowError(false);
             setTodolistData(newList);
         }
     }
@@ -62,12 +68,13 @@ function ToDoListPage() {
 
         return list.map(item => 
             <ListItem dense button key={item.id} className="tditem">
-                <ListItemIcon onClick={() => itemClicked(item.id)}>
+                <ListItemIcon>
                     <Checkbox
                     edge="start"
                     checked={item.completed}
                     tabIndex={-1}
                     disableRipple
+                    onClick={() => itemClicked(item.id)}
                     />
                 </ListItemIcon>
                 <ListItemText className={ item.completed ? "checked-txt" : ""} primary={item.txt} key={item.id} onClick={() => itemClicked(item.id)} />
@@ -79,6 +86,7 @@ function ToDoListPage() {
     };
     
     const getOpenTasksNum = todolistData.map(element => !element.completed).reduce((a, b) => a + b, 0);
+
 
     return (
         <div className="p-todolist">
@@ -97,6 +105,7 @@ function ToDoListPage() {
                     <Button variant="contained" onClick={() => setFilter("completed")} disabled={filter === "completed"}>Completed</Button>
                 </Toolbar>
             </AppBar>
+            <Alert severity="error" style={{ 'visibility': showError ? 'visible' : 'hidden'}}>cannot delete an active task!</Alert>
         </div>
     )
 }

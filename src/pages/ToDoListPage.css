@@ -25,3 +25,11 @@
 .p-todolist .tditem:hover>button {
     display: block;
 }
+
+.p-todolist .display-error {
+    visibility: visible;
+}
+
+.p-todolist .delete-alert {
+    visibility: hidden;
+}
