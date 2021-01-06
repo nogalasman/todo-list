@@ -1,7 +1,8 @@
-import { AppBar, Button, Checkbox, List, ListItem, ListItemIcon, ListItemText, TextField, Toolbar } from '@material-ui/core';
+import { AppBar, Button, Checkbox, IconButton, List, ListItem, ListItemIcon, ListItemText, TextField, Toolbar } from '@material-ui/core';
 import { useState } from 'react';
 import ToDoItem from '../model/ToDoItem';
 import './ToDoListPage.css';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 function ToDoListPage() {
 
@@ -21,6 +22,18 @@ function ToDoListPage() {
             item.completed = !item.completed;
         }
         setTodolistData(newList);
+    }
+
+    function delItem(id) {
+        const list = [...todolistData];
+        const idx = list.findIndex(x => x.id === id);
+        if (list[idx].completed) {
+            list.splice(idx, 1);
+            setTodolistData(list);
+        } else {
+            alert('cannot delete an active task!');
+        }
+        
     }
 
     function addItem(event) {
@@ -48,8 +61,8 @@ function ToDoListPage() {
         } 
 
         return list.map(item => 
-            <ListItem dense button key={item.id} onClick={() => itemClicked(item.id)}>
-                <ListItemIcon>
+            <ListItem dense button key={item.id}>
+                <ListItemIcon onClick={() => itemClicked(item.id)}>
                     <Checkbox
                     edge="start"
                     checked={item.completed}
@@ -57,7 +70,11 @@ function ToDoListPage() {
                     disableRipple
                     />
                 </ListItemIcon>
-                <ListItemText className={ item.completed ? "checked-txt" : ""} primary={item.txt} key={item.id} />
+                <ListItemText className={ item.completed ? "checked-txt" : ""} primary={item.txt} key={item.id} onClick={() => itemClicked(item.id)} />
+                <IconButton
+                 aria-label="delete" onClick={() => delItem(item.id)} color="secondary">
+                <DeleteIcon />
+                </IconButton>
             </ListItem>);
     };
     
